@@ -40,6 +40,41 @@ class AsimovNews:
       n_list = pickle.load(fp)
       return n_list
 
+  def _receive_command(self, valid_commands, timeout=30):
+    command, timed = timedInput('>>', timeout)
+    while command.lower() not in valid_commands and not timed:
+      print('Comando inválido. Digite novamente\n')
+      command, timed = timedInput('>>', timeout)
+    command = 0 if command == '' else command
+    return command
+
+  
+  def main_loop(self):
+    while True:
+      os.system('cls' if os.name == 'nt' else 'clear')
+
+      match self.screen:
+        case 0:
+          print('SEJA BEM VINDO AO ASIMOV NEWS.')
+          print('Por favor escolha algum item do menu')
+          print('')
+          print('1. Ultimas noticias\n2. Adicionar site\n3. Remover sites\n4. Fechar o Programa')
+
+          self.screen = int(self._receive_command(['1', '2', '3', '4'], 5))
+
+        case 1:
+          pass
+
+        case 2:
+          pass
+
+        case 3:
+          pass
+
+        case 4:
+          self.kill = True
+          sys.exit()
+
   def update_news(self):
     while not self.kill:
       for site in self.all_sites:
