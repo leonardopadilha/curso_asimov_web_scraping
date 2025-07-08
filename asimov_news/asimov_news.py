@@ -66,11 +66,39 @@ class AsimovNews:
           pass
 
         case 2:
-          pass
+          os.system('cls' if os.name == 'nt' else 'clear')
+          print('Digite o numero do siste que deseja adicionar para a lista de sites ativos.\nPressione 0 para voltar para o menu.')
+          print('\tSITES ATIVOS ===========\n')
+          for i in self.sites:
+            print('\t', i) # O t é para uma tabulação
+
+          print("\n\tSITES INATIVOS ===========")
+          offline_sites = [i for i in self.all_sites if i not in self.sites]
+          for i in range(len(offline_sites)):
+            print(f'\t{i+1}. {offline_sites[i]}')
+
+          site = int(self._receive_command([str(i) for i in range(len(offline_sites) + 1)], 50))
+          if site == 0:
+            self.screen = 0
+            continue
+          self.sites += [offline_sites[site - 1]]
+          self._update_file(self.sites, 'sites')
+          
 
         case 3:
-          pass
+          os.system('cls' if os.name == 'nt' else 'clear')
+          print('Digite o numero do site para remove-lo. Caso queira voltar para o Menu, digite 0\n')
+          for i in range(len(self.sites)):
+            print(f'\t{i+1}. {self.sites[i]}')
 
+          site = int(self._receive_command([str(i) for i in range(len(self.sites) + 1)], 50))
+          if site == 0:
+            self.screen = 0
+            continue
+
+          del self.sites[site - 1]
+          self._update_file(self.sites, 'sites')
+          
         case 4:
           self.kill = True
           sys.exit()
