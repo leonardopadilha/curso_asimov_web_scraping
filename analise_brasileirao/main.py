@@ -53,3 +53,25 @@ def choose_team(time: str):
   url_22 = base_api + id_time + middle_api + enpoint_22 + end_api
 
   urls_list = [url_17, url_18, url_19, url_20, url_21, url_22]
+
+  for url in urls_list:
+    api_link = requests.get(url, headers = browsers).json()
+    if not 'error' in api_link:
+        data_list.append(api_link['statistics'])
+        if urls_list.index(urls_list[cont_url_list]) == 0:
+            data_list[cont_data_list]['ano'] = 2017
+        elif urls_list.index(urls_list[cont_url_list]) == 1:
+            data_list[cont_data_list]['ano'] = 2018
+        elif urls_list.index(urls_list[cont_url_list]) == 2:
+            data_list[cont_data_list]['ano'] = 2019
+        elif urls_list.index(urls_list[cont_url_list]) == 3:
+            data_list[cont_data_list]['ano'] = 2020
+        elif urls_list.index(urls_list[cont_url_list]) == 4:
+            data_list[cont_data_list]['ano'] = 2021
+        elif urls_list.index(urls_list[cont_url_list]) == 5:
+            data_list[cont_data_list]['ano'] = 2022
+        
+        cont_data_list+=1
+    cont_url_list+=1
+
+  return data_list
